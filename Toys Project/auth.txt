@@ -1,0 +1,14 @@
+
+header('Content-Type: application/json');
+include_once "./token.php";
+
+$token = getallheaders();
+//בודק אם נשלח טוקן
+if(!isset($token["auth-token"])){
+    die("{'err':'you must send token'}");
+}
+//בודק אם הטוקן תקין או תקף
+$checkToken = Token::validateToken($token["auth-token"]);
+if(!$checkToken){
+    die("{'err':'token is invalid or expired'}");
+}
